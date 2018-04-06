@@ -1,0 +1,27 @@
+﻿@page "/js2"
+
+<h1>C# call javascript in Blazor</h1>
+<p id="txt"></p>
+
+<script>
+    const assemblyName = 'BlazorDemo.Client';
+    const namespace    = 'BlazorDemo.Client.Helpers';
+    const typeName = 'StringHelper';
+    const methodName  = 'ToUpper';
+
+    const toUperMethod = Blazor.platform.findMethod(
+        assemblyName,
+        namespace,
+        typeName,
+        methodName
+    );
+
+    let arg1AsDotNetString = Blazor.platform.toDotNetString('Hello ');
+
+    let resultAsDotNetString = Blazor.platform.callMethod(toUperMethod, null, [arg1AsDotNetString]);
+
+    let resultAsJavaScriptString = Blazor.platform.toJavaScriptString(resultAsDotNetString);
+    console.log(resultAsJavaScriptString);
+
+    document.getElementById("txt").innerText = resultAsJavaScriptString;
+</script>

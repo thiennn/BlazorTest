@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Blazor.Browser.Interop
+
+@page "/js"
+
+<h1>C# call javascript in Blazor</h1>
+
+<button @onclick(CallJS)>Call JavaScript</button>
+<script>
+    Blazor.registerFunction('say', (data) => {
+        alert(data);
+        return true;
+    });
+</script>
+
+@functions {
+    void CallJS()
+    {
+        RegisteredFunction.Invoke<bool>("say", "hi!");
+    }
+}
